@@ -10,7 +10,8 @@ const db = require("./models");
 // Routers
 const authRoute = require('./routes/Authenticate');
 app.use('/auth', authRoute);
-
+const openAccount = require("./routes/openAccount");
+app.use("/openaccount", openAccount);
 
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {

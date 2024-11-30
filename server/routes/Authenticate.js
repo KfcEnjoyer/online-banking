@@ -4,7 +4,7 @@ const { users } = require("../models"); // Model import assumed to be correct
 const bcrypt = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 
-const secret_key = "my_secret"; // You should use environment variables in production
+const secret_key = "importantSecret"; // You should use environment variables in production
 
 // Register Route
 router.post("/register", async (req, res) => {
@@ -38,11 +38,11 @@ router.post("/register", async (req, res) => {
     const token = sign(payload, secret_key, { expiresIn: "1h" });
 
     // Send cookie with JWT
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // Use HTTPS in production
-      maxAge: 60 * 60 * 1000, // 1 hour in milliseconds
-    });
+    // res.cookie("token", token, {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === "production", // Use HTTPS in production
+    //   maxAge: 60 * 60 * 1000, // 1 hour in milliseconds
+    // });
 
     res.status(200).json({ message: "Successfully registered", user: newUser });
   } catch (e) {
@@ -76,15 +76,10 @@ router.post("/login", async (req, res) => {
 
     // Generate a JWT token
     const token = sign(payload, secret_key, { expiresIn: "1h" });
+    console.log(token);
+    // Send cookie with JW
 
-    // Send cookie with JWT
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 60 * 60 * 1000,
-    });
-
-    res.status(200).json({ message: "Login successful", user: existingUser });
+    res.status(200).json({ message: "Login successful", token: token, user: existingUser });
   } catch (e) {
     console.error("Error during login:", e);
     res.status(400).json({ error: "Login failed", details: e.message });

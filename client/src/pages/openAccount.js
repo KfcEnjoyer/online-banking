@@ -1,51 +1,80 @@
-import React, { useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {useNavigate } from "react-router-dom";
+import {Link} from "react-router-dom";
 
+function showInput() {
 
-function openAccount() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    let navigate = useNavigate();
+}
 
-    const login = () => {
-        const data = { email: email, password: password };
-        axios.post("http://localhost:3001/auth/login", data).then((response) => {
-            if (response.data.error) {
-                alert(response.data.error)
+function OpenAccount() {
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [type, setType] = useState("");
+    const [phone, setPhone] = useState("");
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                alert("You are not logged in!");
+                return;
             }
-            else{
-                navigate("/");
-            }
+            console.log(localStorage.getItem("token"));
 
-        });
-    };
+
+            try {
+                const response = await axios.get("http://localhost:3001/openaccount", {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setFirstName(response.data.firstName);
+                setLastName(response.data.lastName);
+                setPhone(response.data.phoneNumber);
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+                alert(error.response?.data?.error || "Failed to fetch user details.");
+            }
+        };
+
+        fetchUserData();
+    }, []);
+
     return (
-        <>
-            <div className="loginContainer">
-                <label>Email:</label>
-                <input
-                    type="text"
-                    onChange={(event) => {
-                        setEmail(event.target.value);
-                    }}
-                />
-                <label>Password:</label>
-                <input
-                    type="password"
-                    onChange={(event) => {
-                        setPassword(event.target.value);
-                    }}
-                />
-
-                <button onClick={login}> Login </button>
-                <p>Don't have an account? Register <a href="/register">here</a></p>
+        <div>
+            <div className="top-container">
+                <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <ul className="navbar-nav">
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/">Home</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/about">About</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/contact">Contact</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/login">logout</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/register">Register</Link>
+                        </li>
+                    </ul>
+                </nav>
+                <h1>Welcome to the ... bank!</h1>
             </div>
-            <div className="restBody">
-
+            <div className="openAccount">
+                <h1>Open Account</h1>
+                <p>Please select the type of the account:</p>
+                <button id="checking-button" onClick={setType("Checking")}>Checking</button>
+                <button id="savings-button" onClick={setType("Savings")}>Savings</button>
+                <div className="openAccount-card">
+                    <p>First Name: {firstName}</p>
+                    <p>Last Name: {lastName}</p>
+                    <p>Phone: {phone}</p>
+                </div>
             </div>
-        </>
+        </div>
     );
 }
 
-export default Login;
+export default OpenAccount;
