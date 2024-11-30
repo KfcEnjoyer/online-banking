@@ -14,20 +14,26 @@ function Registration() {
       const validationSchema = Yup.object().shape({
         password:Yup.string().min(4).max(20).required()
       });
-      const onSubmit = (data)=>{
-         axios.post("http://localhost:3001/register", data).then(()=>{
-         console.log(data);
-         })
-      };
-  return (
+    const onSubmit = (data) => {
+        console.log("Submitting form data:", data); // Check the data before sending it
+        axios.post("http://localhost:3001/auth/register", data)
+            .then((response) => {
+                console.log("Response:", response.data);
+            })
+            .catch((error) => {
+                console.error("Error:", error.response ? error.response.data : error.message);
+            });
+    };
+
+    return (
     <div>
       <Formik initialValues={initiValues} onSubmit={onSubmit} validationSchema={validationSchema}> 
         <Form className="formContainer">
             <label>Email: </label>
-            <ErrorMessage name="username" component="span"/>
-            <Field id="inputCreatePost" name="username" placeholder="(Ex, John123...)"/>
+            <ErrorMessage name="email" component="span"/>
+            <Field id="inputCreatePost" name="email" placeholder="(Ex, John123...)"/>
             <label>Password: </label>
-            <ErrorMessage name="username" component="span"/>
+            <ErrorMessage name="password" component="span"/>
             <Field id="inputCreatePost" type="password" name="password" placeholder="Your Password..."/>
             <label>First Name: </label>
             <ErrorMessage name="firstName" component="span"/>

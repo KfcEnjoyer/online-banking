@@ -8,8 +8,8 @@ app.use(cors());
 const db = require("./models");
 
 // Routers
-const registerRouter = require("./routes/Posts");
-app.use("/register", registerRouter);
+const authRoute = require('./routes/Authenticate');
+app.use('/auth', authRoute);
 
 
 db.sequelize.sync().then(() => {

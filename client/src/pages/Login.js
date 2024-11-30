@@ -1,35 +1,33 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import {useNavigate } from "react-router-dom";
-import {AuthContext} from "../helpers/AuthContext"
+
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {setAuthState} = useContext(AuthContext);
   let navigate = useNavigate();
 
   const login = () => {
-    const data = { username: username, password: password };
+    const data = { email: email, password: password };
     axios.post("http://localhost:3001/auth/login", data).then((response) => {
         if (response.data.error) {
             alert(response.data.error)
         }
         else{
-            localStorage.setItem("accessToken", response.data);
-            setAuthState(true);
             navigate("/");
         }
         
     });
   };
   return (
+      <>
     <div className="loginContainer">
-      <label>Username:</label>
+      <label>Email:</label>
       <input
         type="text"
         onChange={(event) => {
-          setUsername(event.target.value);
+          setEmail(event.target.value);
         }}
       />
       <label>Password:</label>
@@ -41,7 +39,12 @@ function Login() {
       />
 
       <button onClick={login}> Login </button>
+        <p>Don't have an account? Register <a href="/register">here</a></p>
     </div>
+      <div className="restBody">
+
+      </div>
+    </>
   );
 }
 
