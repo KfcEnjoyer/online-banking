@@ -16,10 +16,10 @@ function Login() {
                 } else {
                     const token = response.data.token;
                     localStorage.setItem("token", token); // Store JWT in localStorage
-                    console.log(token);
-                    navigate("/openaccount"); // Redirect to the desired page
+                    navigate("/getaccounts"); // Redirect to the desired page
                 }
             })
+
             .catch((error) => {
                 console.error("Login error:", error);
                 alert("Login failed");

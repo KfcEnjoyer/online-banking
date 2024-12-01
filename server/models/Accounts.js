@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 
 module.exports = (sequelize, DataTypes) => {
-  const Accounts = sequelize.define("Accounts", {
+  return sequelize.define("accounts", {
     accountNumber: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -28,6 +28,4 @@ module.exports = (sequelize, DataTypes) => {
     tableName: "Accounts",
     timestamps: true,
   });
-  
-  return Accounts;
 };

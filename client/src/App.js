@@ -1,23 +1,26 @@
+// App.js
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from "./pages/Login";
-import Registration from "./pages/Registration";
+import { AuthProvider } from "./helpers/AuthContext"; // Import the AuthProvider
+import Login from "./pages/Login"; // Your Login component
+import Home from "./pages/Home"; // Your Home component (for example)
 import OpenAccount from "./pages/openAccount";
-
+import OetAccounts from "./pages/getAccounts";
+import Registration from "./pages/Registration";
 function App() {
-  return (
-      <div className="App">
-        <Router>
-          <Routes>
-            {/* Define your routes here */}
-            <Route path="/" element={<h1>Welcome Home</h1>} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Registration />} />
-            <Route path="/openaccount" element={<OpenAccount />} />
-          </Routes>
-        </Router>
-      </div>
-  );
+    return (
+        <AuthProvider>
+            <Router>
+                <Routes>
+                    <Route path="/register" element={<Registration />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/openaccount" element={<OpenAccount />} />
+                    <Route path="/getaccounts" element={<OetAccounts />} />
+                </Routes>
+            </Router>
+        </AuthProvider>
+    );
 }
 
 export default App;
