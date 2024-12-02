@@ -1,7 +1,7 @@
     const express = require("express");
     const router = express.Router();
     const { users, accounts } = require("../models");
-    console.log(accounts)
+    const bcrypt = require('bcrypt');
     const authenticatedUser = require("../middlewares/AuthMiddlewares");
     const {sign} = require("jsonwebtoken"); // Import your middleware
     const secret_key = "importantSecret"; // You should use environment variables in production
@@ -49,11 +49,10 @@
         }
     });
 
-
-    router.post("/open", async (req, res) => {
+    router.post("/create", async (req, res) => {
         try {
-            const { firstName, lastName, email, password, phoneNumber, accountType } = req.body;  // Only accountType needed
-
+            const { firstName, middleName, lastName, email, password, phoneNumber, primaryAddress, secondaryAddress, city, state, country, zipCode, accountType } = req.body;  // Only accountType needed
+            const hashedPassword = await bcrypt.hash(password, 10); // Hash password with a salt rounds of 10
             // Generate a unique account number
             if (await userExists(email)) {
                 res.status(400).json({ error: "Email already in use" });
@@ -61,10 +60,17 @@
 
             const newUser = await users.create({
                 firstName: firstName,
+                middleName: middleName,
                 lastName: lastName,
                 email: email,
-                password: password,
+                password: hashedPassword,
                 phoneNumber: phoneNumber,
+                primaryAddress: primaryAddress,
+                secondaryAddress: secondaryAddress,
+                city: city,
+                state: state,
+                country: country,
+                zipCode: zipCode,
             })
 
             const payload = {
@@ -74,25 +80,43 @@
             const token = sign(payload, secret_key, { expiresIn: "1h" });
 
 
+            res.status(201).json({
+                message: "Account created successfully",
+                userId: newUser.id,
+                token: token,
+            });
+        } catch (error) {
+            console.error("Error creating account:", error);
+            res.status(500).json({ error: "Failed to create account" });
+        }
+    });
+
+    router.post("/open", authenticatedUser, async (req, res) => {
+        const { accountType } = req.body;  // Only accountType is required
+        const userId = req.user.id; // Extracted from JWT via middleware
+
+        try {
+            // Generate a unique account number
             let accountNumber = generateRandomAccountNumber();
             while (await accountNumberExists(accountNumber)) {
                 accountNumber = generateRandomAccountNumber();
             }
 
+            // Create the new account for the authenticated user
             const newAccount = await accounts.create({
-                userId: newUser.id,
+                userId: userId, // Attach the authenticated user's ID to the account
                 accountNumber: accountNumber,
-                accountType: accountType,
+                accountType: accountType
             });
 
             res.status(201).json({
-                message: "Account created successfully",
+                message: "Account opened successfully",
                 accountNumber: newAccount.accountNumber,
-                userId: newUser.id,
+                accountType: newAccount.accountType
             });
         } catch (error) {
-            console.error("Error creating account:", error);
-            res.status(500).json({ error: "Failed to create account" });
+            console.error("Error opening account:", error);
+            res.status(500).json({ error: "Failed to open account" });
         }
     });
 

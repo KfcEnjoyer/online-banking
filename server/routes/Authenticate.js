@@ -21,6 +21,7 @@ router.post("/login", async (req, res) => {
     // Compare passwords
     const checkPassword = await bcrypt.compare(password, existingUser.password);
     if (!checkPassword) {
+      console.log("lll");
       return res.status(400).json({ error: "Incorrect password" });
     }
 

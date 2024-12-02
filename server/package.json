@@ -17,7 +17,8 @@
     "nodemon": "^2.0.22",
     "pg": "^8.13.0",
     "sequelize": "^6.37.5",
-    "sequelize-cli": "^6.6.2"
+    "sequelize-cli": "^6.6.2",
+    "yahoo-finance2": "^2.13.2"
   },
   "description": ""
 }

@@ -94,6 +94,19 @@ function Transfer() {
             </div>
             <div className="container">
                 <div className="transfer-money">
+                    <label>Please select an account you want to transfer your funds from: </label>
+                    <select onChange={(e) => setOriginalAccount(e.target.value)}>
+                        <option value="">-- Select Account --</option>
+                        {accounts
+                            .filter((account) => account.accountNumber !== targetAccount)
+                            .map((account) => (
+                                <option key={account.accountNumber} value={account.accountNumber}>
+                                    {account.accountNumber}, {account.accountType}
+                                </option>
+                            ))}
+
+                    </select>
+                    <input id="hide-input" className="hide" type="number" value={accounts.find(account => account.accountNumber === originalAccount)?.balance} />
                     <label>Please select an account you want to transfer your funds to: </label>
                     <select onChange={(e) => setTargetAccount(e.target.value)}>
                         <option value="">-- Select Account --</option>
@@ -105,20 +118,8 @@ function Transfer() {
                                 </option>
                             ))}
                     </select>
-
-                    <label>Please select an account you want to transfer your funds from: </label>
-                    <select onChange={(e) => setOriginalAccount(e.target.value)}>
-                        <option value="">-- Select Account --</option>
-                        {accounts
-                            .filter((account) => account.accountNumber !== targetAccount)
-                            .map((account) => (
-                                <option key={account.accountNumber} value={account.accountNumber}>
-                                    {account.accountNumber}, {account.accountType}
-                                </option>
-                            ))}
-                    </select>
                     <label>Please enter the amount:</label>
-                    <button onClick={console.log(amount)} />
+                    <button onClick={console.log(amount)}/>
                     <input type="number" onChange={(e) => setAmount(e.target.value)}/>
                     <button onClick={handleSubmit}>Transfer</button>
                 </div>

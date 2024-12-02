@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { sequelize, accounts } = require("../models");
+const { sequelize, accounts, transactions, transfers } = require("../models");
 const authenticatedUser = require("../middlewares/AuthMiddlewares");
 
 router.post("/", authenticatedUser, async (req, res) => {
@@ -26,14 +26,45 @@ router.post("/", authenticatedUser, async (req, res) => {
             return res.status(400).json({ error: "Insufficient balance in the original account" });
         }
 
-
+        const oldBalance1 = acc1.balance;
+        const oldBalance2 = acc2.balance;
         acc1.balance = parseFloat(acc1.balance) - parseFloat(amount);
         await acc1.save({t});
         acc2.balance = parseFloat(acc2.balance) + parseFloat(amount);
         await acc2.save({t});
 
         await t.commit();
-        res.status(200).json({ message: "Transfer successful" });
+
+        const transfer = await transfers.create({
+            originalAccount: originalAccount,
+            targetAccount: targetAccount,
+            amount: parseFloat(amount),
+            status: "completed",
+            oldBalance: oldBalance1,
+            newBalance: acc1.balance,
+        })
+
+        const transaction1 = await transactions.create({
+            account: originalAccount,
+            amount: parseFloat(amount),
+            status: "completed",
+            oldBalance: oldBalance1,
+            newBalance: acc1.balance,
+        });
+
+        const transaction2 = await transactions.create({
+            account: targetAccount,
+            amount: parseFloat(amount),
+            status: "completed",
+            oldBalance: oldBalance2,
+            newBalance: acc2.balance,
+        });
+
+        res.status(200).json({ message: "Transfer successful",
+        transactionId1: transaction1.transactionId,
+        transactionId2: transaction2.transactionId,
+        transferId: transfer.transferId,
+        });
     } catch (error) {
         console.error("Error processing transfer:", error);
         res.status(500).json({ error: "Internal server error" });

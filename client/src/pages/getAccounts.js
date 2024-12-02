@@ -73,7 +73,7 @@ function GetAccounts() {
                     ) : (
                         accounts.map((account, index) => (
                             <div key={index}>
-                                <label>Account Number: {account.accountNumber}</label>
+                                <label>Account Number: <a href={"/account/" + account.accountNumber}>{account.accountNumber}</a></label>
                                 <input value={account.accountNumber} readOnly />
                                 <label>Balance: {account.balance}</label>
                                 <input value={account.balance} readOnly />
