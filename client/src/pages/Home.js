@@ -8,7 +8,7 @@ function Home() {
     let navigate = useNavigate();
 
     useEffect(() => {
-      axios.get("http://localhost:3001/posts").then((response) => {
+      axios.get("http://172.24.2.169:3001/posts").then((response) => {
         setListOfPosts(response.data);
       });
     }, []);

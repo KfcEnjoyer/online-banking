@@ -16,7 +16,7 @@ const openAccount = require("./routes/openAccount");
 app.use("/openaccount", openAccount);
 
 db.sequelize.sync().then(() => {
-  app.listen(3001, () => {
+  app.listen(3001, "172.24.2.169", () => {
     console.log("Server running on port 3001");
   });
 });

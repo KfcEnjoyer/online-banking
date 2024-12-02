@@ -3,7 +3,7 @@ import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:3001", // Your API base URL
+    baseURL: "http://172.24.2.169:3001", // Your API base URL
 });
 
 axiosInstance.interceptors.request.use(

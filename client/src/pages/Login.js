@@ -9,7 +9,7 @@ function Login() {
 
     const login = () => {
         const data = { email, password };
-        axios.post("http://localhost:3001/auth/login", data)
+        axios.post("http://172.24.2.169:3001/auth/login", data)
             .then((response) => {
                 if (response.data.error) {
                     alert(response.data.error);

@@ -24,7 +24,7 @@ function OpenAccount() {
     });
     const onSubmit = (data) => {
         console.log("Submitting form data:", data); // Check the data before sending it
-        axios.post("http://localhost:3001/openaccount/open", data)
+        axios.post("http://172.24.2.169:3001/openaccount/open", data)
             .then((response) => {
                 console.log("Response:", response.data);
                 nav("/geta  ccounts")
