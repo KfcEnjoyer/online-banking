@@ -4,12 +4,38 @@ import axiosInstance from "../helpers/axiosInstance";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import "./styles/openAccount.css";
 
 function OpenAccount() {
     console.log(localStorage.getItem("token")); // Check if the token is stored
 
-    const [accountType, setAccountType] = useState("");
-    const nav = useNavigate();
+    const [selectedAccount, setSelectedAccount] = useState(null);
+  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [isSecondFormVisible, setIsSecondFormVisible] = useState(false);
+  const nav = useNavigate(); 
+  const [formStep, setFormStep] = useState(1); 
+
+  const handleCardClick = (type) => {
+    setSelectedAccount(type);
+    setIsFormVisible(true);  // Показываем форму после выбора карточки
+  };
+
+  const handleCloseForm = () => {
+    setIsFormVisible(false);
+    setTimeout(() => {
+      setSelectedAccount(null);  // Сбрасываем выбранный аккаунт
+    }, 200);  // Задержка для анимации
+  };
+
+  const handleNext = () => {
+    setFormStep(2); // Перейти ко второму шагу формы
+    setIsSecondFormVisible(true); // Показать второй шаг
+  };
+  
+
+      
+
+    
 
     const initialValues = {
         firstName: "",
@@ -24,7 +50,7 @@ function OpenAccount() {
         state: "",
         country: "",
         zipCode: "",
-        accountType: accountType
+        accountType: selectedAccount
     };
     const validationSchema = Yup.object().shape({
         firstName: Yup.string().required("First name is required"),
@@ -49,7 +75,7 @@ function OpenAccount() {
                 // Now open the account after successful user creation
                 return axios.post(
                     "http://172.24.2.169:3001/openaccount/open",
-                    { accountType },
+                    { selectedAccount },
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
             })
@@ -62,115 +88,128 @@ function OpenAccount() {
             });
     }
 
+
     return (
-        <div>
-            <div className="top-container">
-                <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <ul className="navbar-nav">
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/">Home</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/about">About</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/contact">Contact</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/login">Logout</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/register">Register</Link>
-                        </li>
-                    </ul>
-                </nav>
-                <h1>Welcome to the ... bank!</h1>
+        <div className="openAccountContainer">
+          <header className="header">
+            <p className="bankName">AL.bank</p>
+            <nav className="navLinks">
+              <a href="#home">Home</a>
+              <a href="#about">About</a>
+              <a href="#contact">Contact</a>
+              <a href="#login">Login</a>
+            </nav>
+          </header>
+      
+          <main className={`mainContent ${isFormVisible ? "" : "fadeOutMain"}`}>
+            <div className={isFormVisible ? "fadeOutTitle" : ""}>
+              <h1 className="mainTitle">Open Account</h1>
+              <p className="mainSubtitle">Please select the type of the account:</p>
             </div>
-            <div className="openAccount">
-                <h1>Open Account</h1>
-                <p>Please select the type of the account:</p>
-
-                <button onClick={console.log(accountType)}></button>
-
-                <div className="openAccount-card">
-                    <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-                        {({setFieldValue} ) => <Form className="formContainer">
-                            <label>Account Type: </label>
-                            <Field id="accountType" name="accountType" placeholder="Account Type..." readOnly
-                                   value={accountType}/>
-                            <div className="checking-box">
-                                <button onClick={() => {
-                                    setAccountType("Checking");
-                                    setFieldValue("accountType", "Checking")
-                                }}>Checking
-                                </button>
-                            </div>
-                            <div className="savings-box">
-                                <button onClick={() => {
-                                    setAccountType("Savings");
-                                    setFieldValue("accountType", "Savings")
-                                }}>Checking
-                                </button>
-                            </div>
-                            <div className="investments-box">
-                                <button onClick={() => {
-                                    setAccountType("Investments");
-                                    setFieldValue("accountType", "Investments")
-                                }}>Checking
-                                </button>
-                            </div>
-                            <label>First Name: </label>
-                            <ErrorMessage name="firstName" component="span"/>
-                            <Field id="inputCreatePost" name="firstName" placeholder="(Ex, John...)"/>
-                            <label>Middle Name: </label>
-                            <ErrorMessage name="middleName" component="span"/>
-                            <Field id="inputCreatePost" name="middleName" placeholder="(Ex, John...)"/>
-                            <label>Last Name: </label>
-                            <ErrorMessage name="lastName" component="span"/>
-                            <Field id="inputCreatePost" name="lastName" placeholder="(Ex, Doe...)"/>
-                            <label>Email: </label>
-                            <ErrorMessage name="email" component="span"/>
-                            <Field id="inputCreatePost" name="email" placeholder="(Ex, John123...)"/>
-                            <label>Password: </label>
-                            <ErrorMessage name="password" component="span"/>
-                            <Field id="inputCreatePost" type="password" name="password"
-                                   placeholder="Your Password..."/>
-                            <label>Phone Number: </label>
-                            <ErrorMessage
-                                name="phoneNumber" component="span"/>
-                            <Field id="inputCreatePost" name="phoneNumber" placeholder="(Ex, 1234567890...)"/>
-                            <button>Next</button>
-
-                            <div className="open-account secondary">
-                                <label>Primary Address: </label>
-                                <ErrorMessage name="primaryAddress" component="span"/>
-                                <Field id="inputCreatePost" name="primaryAddress"/>
-                                <label>Secondary Address: </label>
-                                <ErrorMessage name="secondaryAddress" component="span"/>
-                                <Field id="inputCreatePost" name="secondaryAddress"/>
-                                <label>City, Town or Village: </label>
-                                <ErrorMessage name="city" component="span"/>
-                                <Field id="inputCreatePost" name="city"/>
-                                <label>State or Province: </label>
-                                <ErrorMessage name="state" component="span"/>
-                                <Field id="inputCreatePost" name="state"/>
-                                <label>Country: </label>
-                                <ErrorMessage name="country" component="span"/>
-                                <Field id="inputCreatePost" name="country"/>
-                                <label>ZipCode: </label>
-                                <ErrorMessage name="zipCode" component="span"/>
-                                <Field id="inputCreatePost" name="zipCode"/>
-                                <button type="submit">Open Account</button>
-                            </div>
-                        </Form>
-                        }
-                    </Formik>
+      
+            <div className={`accountOptions ${selectedAccount ? "hidden" : ""} ${isFormVisible ? "fadeOutOptions" : ""}`}>
+              {["Checking", "Savings", "Investment"].map((type) => (
+                <div
+                  key={type}
+                  className={`accountCard ${selectedAccount === type ? "expand" : ""}`}
+                  onClick={() => handleCardClick(type)}
+                >
+                  <img src="/credit_card_png90-3-11.png" alt={type} className="cardImage" />
+                  <p className="cardText">{type}</p>
                 </div>
-
+              ))}
             </div>
+          </main>
+      
+          {isFormVisible && (
+            <div className="registrationForm">
+              {formStep === 1 ? (
+                <>
+                  <h2>{selectedAccount} Account</h2>
+                  <form>
+                    <input type="text" placeholder="First name:" />
+                    <input type="text" placeholder="Last name:" />
+                    <input type="email" placeholder="Email:" />
+                    <input type="password" placeholder="Password:" />
+                    <input type="text" placeholder="Phone Number:" />
+                    <div className="buttonContainer">
+                      <button type="button" onClick={handleCloseForm}>Close</button>
+                      <button type="button" onClick={handleNext}>Next</button>
+                    </div>
+                  </form>
+                </>
+              ) : (
+                <>
+                  <h2>{selectedAccount} Account - Address Information</h2>
+                  <form>
+                    <input type="text" placeholder="Primary address:" />
+                    <input type="text" placeholder="City:" />
+                    <input type="text" placeholder="State:" />
+                    <input type="text" placeholder="Country:" />
+                    <input type="text" placeholder="Zip Code:" />
+                    <input type="password" placeholder="Confirm Password:" />
+                    <div className="buttonContainer">
+                      <button type="button" onClick={handleCloseForm}>Close</button>
+                      <button type="submit">Submit</button>
+                    </div>
+                  </form>
+                </>
+              )}
+            </div>
+            
+
+          )}
+
+
+          {/* Footer Section */}
+  <footer className="footer">
+    <div className="wave" id="wave1"></div>
+    <div className="wave" id="wave2"></div>
+    <div className="wave" id="wave3"></div>
+    <div className="wave" id="wave4"></div>
+    <ul className="social-icon">
+      <li className="social-icon__item">
+        <a href="#" className="social-icon__link">
+          <i className="fab fa-facebook-f"></i>
+        </a>
+      </li>
+      <li className="social-icon__item">
+        <a href="#" className="social-icon__link">
+          <i className="fab fa-twitter"></i>
+        </a>
+      </li>
+      <li className="social-icon__item">
+        <a href="#" className="social-icon__link">
+          <i className="fab fa-instagram"></i>
+        </a>
+      </li>
+      <li className="social-icon__item">
+        <a href="#" className="social-icon__link">
+          <i className="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    </ul>
+    <ul className="menu">
+      <li className="menu__item">
+        <a href="#home" className="menu__link">Home</a>
+      </li>
+      <li className="menu__item">
+        <a href="#about" className="menu__link">About</a>
+      </li>
+      <li className="menu__item">
+        <a href="#services" className="menu__link">Services</a>
+      </li>
+      <li className="menu__item">
+        <a href="#contact" className="menu__link">Contact</a>
+      </li>
+    </ul>
+    <p>&copy; 2024 AL.bank. All Rights Reserved.</p>
+  </footer>
+
         </div>
-    );
-}
+        
+      );
+    }
 
 
 export default OpenAccount;

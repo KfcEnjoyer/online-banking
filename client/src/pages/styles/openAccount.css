@@ -1,13 +1,8 @@
 :root {
     --font-family-montserrat: 'Montserrat', sans-serif;
-    --primary-color: #3838b1;
-    --text-color: #000;
-    --background-color: #ffffff;
-    --light-gray: #f7f7f7;
-    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
-  /* Reset */
+  /* CSS Reset */
   * {
     margin: 0;
     padding: 0;
@@ -16,75 +11,91 @@
   
   body {
     font-family: var(--font-family-montserrat);
-    background-color: var(--background-color);
-  }
-  
-  .openAccountContainer {
+    background-color: rgba(255, 255, 255, 1); /* Белый фон */
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    justify-content: flex-start; /* Выравнивание сверху */
+    min-height: 100vh;
+    width: 100%; /* Устанавливаем ширину body на 100% */
+    overflow-x: hidden; /* Убираем горизонтальную прокрутку */
   }
   
-  /* Header Section */
+  /* Верхний логотип и меню */
   .header {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 40px;
+    padding: 20px 40px; /* Убираем отступ сверху и снизу */
+    background-color: white;
+    position: fixed; /* Фиксированное меню */
+    top: 0;
+    left: 0;
+    z-index: 10; /* Чтобы меню всегда было сверху */
   }
   
-  .bankName {
+  .logo {
     font-size: 24px;
-    font-weight: bold;
-    color: var(--primary-color);
+    font-weight: 700;
+    color: rgba(56, 56, 177, 1); /* Синий текст */
   }
   
-  .navLinks a {
+/* Стили для ссылок в навигации */
+.navLinks a {
     margin: 0 15px;
     text-decoration: none;
-    color: var(--text-color);
+    color: gray; /* Серый цвет для ссылок по умолчанию */
     font-size: 16px;
     font-weight: 500;
+    transition: color 0.3s ease; /* Плавный переход цвета */
   }
   
+  /* Стили для подсветки при наведении */
   .navLinks a:hover {
-    color: var(--primary-color);
+    color: var(--primary-color); /* Цвет при наведении */
   }
   
-  /* Main Section */
+  
+  /* Основной контейнер (отступ под меню) */
   .mainContent {
+    padding-top: 120px;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 120px; /* Увеличиваем отступ, чтобы текст не перекрывался меню */
+    width: 100%; /* Ширина на 100% */
   }
   
+  /* Заголовок и подзаголовок */
   .mainTitle {
-    font-size: 36px;
-    font-weight: bold;
-    color: var(--primary-color);
-    margin-bottom: 10px;
+    font-size: 60px;
+    font-weight: 700;
+    color: rgba(56, 56, 177, 1); /* Синий текст */
   }
   
   .mainSubtitle {
-    font-size: 18px;
-    color: var(--text-color);
-    margin-bottom: 30px;
+    font-size: 25px;
+    font-weight: 300;
+    color: rgba(0, 0, 0, 0.7); /* Темно-серый текст */
+    margin-top: 10px; /* Отступ от заголовка */
+    text-align: center; /* Центрирование текста */
   }
   
+  /* Опции выбора аккаунта */
   .accountOptions {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
+    gap: 100px; /* Расстояние между карточками */
+    margin-top: 70px; /* Отступ от текста */
+    width: 100%; /* Устанавливаем ширину на 100% */
   }
   
+  /* Карточка аккаунта */
   .accountCard {
-    background-color: var(--light-gray);
-    width: 300px;
-    height: 250px;
-    border-radius: 20px;
-    box-shadow: var(--box-shadow);
+    background-color: rgba(255, 255, 255, 1); /* Белый фон */
+    width: 316px;
+    height: 186px;
+    border-radius: 80px; /* Изменено на 80px для менее округлых углов */
+    box-shadow: 0 8px 50px rgba(0, 0, 0, 0.1); /* Легкая тень */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -93,19 +104,183 @@
   }
   
   .accountCard:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-10px); /* Подъем карточки при наведении */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2); /* Увеличенная тень */
   }
   
   .cardImage {
-    width: 150px;
+    margin-left: -270px;
+    width: 270px; /* Размер изображения внутри карточки */
     height: auto;
-    margin-bottom: 15px;
+    margin-bottom: -35px;
   }
   
   .cardText {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--text-color);
+    font-size: 22px;
+    font-weight: 300;
+    color: rgb(37, 37, 37); /* Черный текст */
+    position: relative; /* Делаем текст относительно родителя */
+    top: -110px; /* Поднимаем текст вверх (можете менять значение) */
+    right: -30px;
+  }
+
+
+
+
+
+
+
+
+  /* Скрываем модальное окно по умолчанию */
+/* Стили для плавного исчезновения всех элементов, кроме navbar */
+
+.registrationForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 80px;
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  width: 400px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translate(-50%, -60%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
   }
   
+/* Стили для полей ввода */
+.registrationForm input {
+  width: 100%; /* Сделать поля ввода на всю ширину контейнера */
+  padding: 10px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-sizing: border-box; /* Чтобы padding не выходил за пределы */
+}
+
+/* Контейнер для кнопок с использованием Flexbox */
+.registrationForm .buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; /* Сделать контейнер кнопок на всю ширину */
+  margin-top: 20px;
+}
+
+/* Кнопки с одинаковым размером */
+.registrationForm .buttonContainer button {
+  padding: 10px 30px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  flex: 1; /* Кнопки занимают одинаковое пространство */
+  margin: 0 10px; /* Отступы между кнопками */
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+/* Эффект при наведении на кнопки */
+.registrationForm .buttonContainer button:hover {
+  transform: scale(1.05);
+  background-color: #0056b3;
+}
+
+
+
+  .registrationForm h2 {
+    position: relative;
+    top: -30px; /* Поднимет только этот элемент на 10px */
+}
+
+
+
+.fadeOutTitle{
+  opacity: 0; /* Полностью прозрачный */
+  pointer-events: none; /* Отключение взаимодействия */
+  transition: opacity 0.5s ease-out; /* Плавный переход */
+}
+
+/* Для скрытия карточек аккаунтов */
+.fadeOutOptions {
+  opacity: 0; /* Полностью прозрачный */
+  pointer-events: none; /* Отключение взаимодействия */
+  transition: opacity 0.5s ease-out; /* Плавный переход */
+}
+
+
+
+
+
+
+
+
+
+/* Адаптивные стили */
+@media (max-width: 1024px) {
+  .mainTitle {
+    font-size: 50px;
+  }
+
+  .mainSubtitle {
+    font-size: 22px;
+  }
+
+  .accountCard {
+    width: 280px;
+    height: 160px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainTitle {
+    font-size: 40px;
+  }
+
+  .mainSubtitle {
+    font-size: 18px;
+  }
+
+  .accountOptions {
+    gap: 20px;
+  }
+
+  .accountCard {
+    width: 250px;
+    height: 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainTitle {
+    font-size: 30px;
+  }
+
+  .mainSubtitle {
+    font-size: 16px;
+  }
+
+  .accountCard {
+    width: 200px;
+    height: 120px;
+  }
+
+  .registrationForm {
+    width: 95%;
+    padding: 20px;
+  }
+}
