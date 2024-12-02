@@ -14,6 +14,8 @@ const authRoute = require('./routes/Authenticate');
 app.use('/auth', authRoute);
 const openAccount = require("./routes/openAccount");
 app.use("/openaccount", openAccount);
+const transfer = require("./routes/Transfer");
+app.use("/transfer", transfer);
 
 db.sequelize.sync().then(() => {
   app.listen(3001, "172.24.2.169", () => {

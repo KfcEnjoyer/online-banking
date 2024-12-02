@@ -7,7 +7,9 @@ import axios from "axios";
 
 function Transfer() {
     const [accounts, setAccounts] = useState([]);
-    const [amount, setAmount] = useState(0);
+    const [originalAccount, setOriginalAccount] = useState("");
+    const [targetAccount, setTargetAccount] = useState("");
+    const [amount, setAmount] = useState(0.00);
     const nav = useNavigate();
 
     useEffect(() => {
@@ -44,6 +46,28 @@ function Transfer() {
         fetchAccountsData();
     }, [nav]);
 
+    const handleSubmit = () => {
+        const token = localStorage.getItem("token");
+        console.log(localStorage.getItem("token")); // Check if the token is stored
+
+        if (!token) {
+            alert("You are not logged in!");
+            nav("/login");
+            return;
+        }
+        const data = { originalAccount, targetAccount, amount };
+        axios.post("http://172.24.2.169:3001/transfer", data, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+            .then((response) => {
+                console.log("Response:", response.data);
+                nav("/getaccounts"); // Navigate to accounts page after successful transfer
+            })
+            .catch((error) => {
+                console.error("Error:", error.response ? error.response.data : error.message);
+            });
+    };
+
     return (
         <div>
             <div className="top-container">
@@ -70,12 +94,33 @@ function Transfer() {
             </div>
             <div className="container">
                 <div className="transfer-money">
-                    <label>Please select an account</label>
-                    <select>
-                        {accounts.map((account) => (
-                            <option key={account.id} value={account.id}></option>
-                        ))}
+                    <label>Please select an account you want to transfer your funds to: </label>
+                    <select onChange={(e) => setTargetAccount(e.target.value)}>
+                        <option value="">-- Select Account --</option>
+                        {accounts
+                            .filter((account) => account.accountNumber !== originalAccount)
+                            .map((account) => (
+                                <option key={account.accountNumber} value={account.accountNumber}>
+                                    {account.accountNumber}, {account.accountType}
+                                </option>
+                            ))}
                     </select>
+
+                    <label>Please select an account you want to transfer your funds from: </label>
+                    <select onChange={(e) => setOriginalAccount(e.target.value)}>
+                        <option value="">-- Select Account --</option>
+                        {accounts
+                            .filter((account) => account.accountNumber !== targetAccount)
+                            .map((account) => (
+                                <option key={account.accountNumber} value={account.accountNumber}>
+                                    {account.accountNumber}, {account.accountType}
+                                </option>
+                            ))}
+                    </select>
+                    <label>Please enter the amount:</label>
+                    <button onClick={console.log(amount)} />
+                    <input type="number" onChange={(e) => setAmount(e.target.value)}/>
+                    <button onClick={handleSubmit}>Transfer</button>
                 </div>
             </div>
         </div>
