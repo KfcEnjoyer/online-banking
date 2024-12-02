@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
+import axios from "axios";
 
 // Create a context for authentication
 export const AuthContext = createContext();
@@ -17,38 +18,23 @@ export const AuthProvider = ({ children }) => {
 
             if (token) {
                 try {
-                    // Decode the token and check expiration
-                    const decodedToken = jwtDecode(token);
-                    const currentTime = Date.now() / 1000; // Current time in seconds
-
-                    // If token is expired, remove from localStorage and set authData to null
-                    if (decodedToken.exp < currentTime) {
-                        console.log('Token expired');
-                        localStorage.removeItem('token');
-                        setAuthData({ token: null, user: null });
-                        return;
-                    }
-
-                    // If token is still valid, fetch user data
-                    const response = await fetch('http://localhost:3001/profile', {
-                        method: 'GET',
+                    const response = await axios.get('http://localhost:3001/profile', {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
                     });
 
-                    if (response.ok) {
-                        const user = await response.json();
-                        setAuthData({ token, user });
+                    if (response.status === 200) {
+                        setAuthData({token, user: response.data});
                     } else {
                         console.log('Failed to fetch user data, invalid token');
                         localStorage.removeItem('token');
-                        setAuthData({ token: null, user: null });
+                        setAuthData({token: null, user: null});
                     }
                 } catch (error) {
-                    console.error('Error decoding token:', error);
+                    console.error('Error fetching user data:', error);
                     localStorage.removeItem('token');
-                    setAuthData({ token: null, user: null });
+                    setAuthData({token: null, user: null});
                 }
             }
         };

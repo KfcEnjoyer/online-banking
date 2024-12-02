@@ -16,7 +16,7 @@ function Login() {
                 } else {
                     const token = response.data.token;
                     localStorage.setItem("token", token); // Store JWT in localStorage
-                    navigate("/getaccounts"); // Redirect to the desired page
+                    navigate("/transfer"); // Redirect to the desired page
                 }
             })
 

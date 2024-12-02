@@ -8,6 +8,8 @@ app.use(cors());
 const db = require("./models");
 
 // Routers
+const profile = require("./routes/Profile");
+app.use('/profile', profile);
 const authRoute = require('./routes/Authenticate');
 app.use('/auth', authRoute);
 const openAccount = require("./routes/openAccount");

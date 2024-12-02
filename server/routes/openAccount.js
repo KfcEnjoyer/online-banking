@@ -2,12 +2,19 @@
     const router = express.Router();
     const { users, accounts } = require("../models");
     console.log(accounts)
-    const authenticatedUser = require("../middlewares/AuthMiddlewares"); // Import your middleware
+    const authenticatedUser = require("../middlewares/AuthMiddlewares");
+    const {sign} = require("jsonwebtoken"); // Import your middleware
+    const secret_key = "importantSecret"; // You should use environment variables in production
+
 
     function generateRandomAccountNumber() {
         return String(Math.floor(1000000000 + Math.random() * 9000000000));  // Return as string
     }
 
+    async function userExists(email) {
+        const user = await users.findOne({ where: { email: email } });
+        return user !== null;
+    }
 
     // Function to check if account number exists in accounts table
     async function accountNumberExists(accountNumber) {
@@ -43,27 +50,45 @@
     });
 
 
-    router.post("/open", authenticatedUser, async (req, res) => {
+    router.post("/open", async (req, res) => {
         try {
-            const { accountType } = req.body;  // Only accountType needed
-            const userId = req.user.id;  // Retrieved from JWT
+            const { firstName, lastName, email, password, phoneNumber, accountType } = req.body;  // Only accountType needed
 
             // Generate a unique account number
+            if (await userExists(email)) {
+                res.status(400).json({ error: "Email already in use" });
+            }
+
+            const newUser = await users.create({
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                password: password,
+                phoneNumber: phoneNumber,
+            })
+
+            const payload = {
+                id: newUser.id,
+                email: newUser.email,
+            };
+            const token = sign(payload, secret_key, { expiresIn: "1h" });
+
+
             let accountNumber = generateRandomAccountNumber();
             while (await accountNumberExists(accountNumber)) {
                 accountNumber = generateRandomAccountNumber();
             }
-            console.log(accountType);
-            // Create the new account without firstName, lastName, and phoneNumber
+
             const newAccount = await accounts.create({
-                userId,
-                accountNumber,
-                accountType,  // Ensures accountType is passed correctly
+                userId: newUser.id,
+                accountNumber: accountNumber,
+                accountType: accountType,
             });
 
             res.status(201).json({
                 message: "Account created successfully",
                 accountNumber: newAccount.accountNumber,
+                userId: newUser.id,
             });
         } catch (error) {
             console.error("Error creating account:", error);

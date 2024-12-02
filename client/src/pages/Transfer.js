@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../helpers/axiosInstance";
-import { jwtDecode } from "jwt-decode"; // Import the jwt-decode function
+import {ErrorMessage, Field, Form, Formik} from "formik";
+import * as Yup from "yup";
+import axios from "axios";
 
-function GetAccounts() {
+function Transfer() {
     const [accounts, setAccounts] = useState([]);
+    const [amount, setAmount] = useState(0);
     const nav = useNavigate();
 
     useEffect(() => {
@@ -63,29 +66,21 @@ function GetAccounts() {
                         </li>
                     </ul>
                 </nav>
-                <h1>Welcome to rrr ... bank!</h1>
+                <h1>Welcome to the ... bank!</h1>
             </div>
-            <div className="openAccount">
-                <h1>Your Accounts</h1>
-                <div className="openAccount-card">
-                    {accounts.length === 0 ? (
-                        <p>No accounts found.</p>
-                    ) : (
-                        accounts.map((account, index) => (
-                            <div key={index}>
-                                <label>Account Number: {account.accountNumber}</label>
-                                <input value={account.accountNumber} readOnly />
-                                <label>Balance: {account.balance}</label>
-                                <input value={account.balance} readOnly />
-                                <label>Account Type: {account.accountType}</label>
-                                <input value={account.accountType} readOnly />
-                            </div>
-                        ))
-                    )}
+            <div className="container">
+                <div className="transfer-money">
+                    <label>Please select an account</label>
+                    <select>
+                        {accounts.map((account) => (
+                            <option key={account.id} value={account.id}></option>
+                        ))}
+                    </select>
                 </div>
             </div>
         </div>
     );
 }
 
-export default GetAccounts;
+
+export default Transfer;
