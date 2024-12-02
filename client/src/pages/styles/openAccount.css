@@ -1,0 +1,111 @@
+:root {
+    --font-family-montserrat: 'Montserrat', sans-serif;
+    --primary-color: #3838b1;
+    --text-color: #000;
+    --background-color: #ffffff;
+    --light-gray: #f7f7f7;
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Reset */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: var(--font-family-montserrat);
+    background-color: var(--background-color);
+  }
+  
+  .openAccountContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  /* Header Section */
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+  }
+  
+  .bankName {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--primary-color);
+  }
+  
+  .navLinks a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  .navLinks a:hover {
+    color: var(--primary-color);
+  }
+  
+  /* Main Section */
+  .mainContent {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .mainTitle {
+    font-size: 36px;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+  }
+  
+  .mainSubtitle {
+    font-size: 18px;
+    color: var(--text-color);
+    margin-bottom: 30px;
+  }
+  
+  .accountOptions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .accountCard {
+    background-color: var(--light-gray);
+    width: 300px;
+    height: 250px;
+    border-radius: 20px;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .accountCard:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .cardImage {
+    width: 150px;
+    height: auto;
+    margin-bottom: 15px;
+  }
+  
+  .cardText {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-color);
+  }
+  

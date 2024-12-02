@@ -1,0 +1,149 @@
+/* Overall container */
+.loginContainer {
+    display: flex;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, rgba(83, 90, 164, 0.7), rgba(69, 67, 192, 0.7)), url('https://www.investopedia.com/thmb/pxxo1p6473mB4XmnwmSeAUdunSQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1203763961-880a467befb64f39856f3fc7904ae12a.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+/* Adding a dark overlay for better readability */
+.loginContainer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Optional dark overlay for better readability */
+    z-index: 0;
+}
+
+/* Left Pane */
+.leftPane {
+    flex: 1;
+    background: #fff;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px 0 0 8px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.leftPane h1 {
+    color: #475ba3;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.leftPane label {
+    width: 100%;
+    margin: 10px 0 5px;
+    color: #333;
+    font-size: 14px;
+}
+
+.leftPane input {
+    width: 100%;
+    padding: 8px 0;
+    margin-bottom: 20px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    background: transparent;
+    outline: none;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.leftPane input:focus {
+    border-bottom: 2px solid #535aa4;
+}
+
+.leftPane .forgotPassword {
+    color: #474da3;
+    text-align: right;
+    margin-bottom: 20px;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.leftPane .forgotPassword:hover {
+    text-decoration: underline;
+}
+
+.leftPane .loginButton {
+    background: rgb(54, 59, 151);
+    color: #fff;
+    padding: 12px 0;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.leftPane .loginButton:hover {
+    background: #333d8b;
+    transform: scale(1.05);
+}
+
+/* Right Pane */
+.rightPane {
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: transparent; /* Remove solid color */
+    color: #fff;
+    padding: 50px;
+    border-radius: 0 8px 8px 0;
+    position: relative;
+    z-index: 1;
+}
+
+.rightPane h1 {
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.rightPane p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-align: center;
+    line-height: 1.5;
+    max-width: 70%;
+}
+
+.rightPane .signupSection {
+    position: absolute;
+    bottom: 50px;
+    text-align: center;
+}
+
+.rightPane .signupSection p {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.rightPane .signupButton {
+    background: #fff;
+    color: #3a47a7;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+    margin-left: -50px;
+}
+
+.rightPane .signupButton:hover {
+    background: #ddd;
+}

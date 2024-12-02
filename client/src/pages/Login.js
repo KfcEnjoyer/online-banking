@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "./styles/Login.css";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -28,19 +29,32 @@ function Login() {
 
     return (
         <div className="loginContainer">
-            <label>Email:</label>
-            <input
-                type="text"
-                onChange={(event) => setEmail(event.target.value)}
-            />
-            <label>Password:</label>
-            <input
-                type="password"
-                onChange={(event) => setPassword(event.target.value)}
-            />
-            <button onClick={login}>Login</button>
-            <p>Don't have an account? Register <a href="/register">here</a></p>
+    <div className="leftPane">
+        <h1>Login</h1>
+        <label>Email:</label>
+        <input
+            type="email"
+            placeholder="Enter your email"
+            onChange={(event) => setEmail(event.target.value)}
+        />
+        <label>Password:</label>
+        <input
+            type="password"
+            placeholder="Enter your password"
+            onChange={(event) => setPassword(event.target.value)}
+        />
+        <a href="/forgot-password" className="forgotPassword">Forgot Your Password?</a>
+        <button className="loginButton" onClick={login}>Login</button>
+    </div>
+    <div className="rightPane">
+        <div className="signupSection">
+            <p>Don't have an account?</p>
+            <a href="/openaccount" className="signupButton">Sign Up</a>
         </div>
+        <h1>Welcome to AL.bank</h1>
+        <p>Login to your account to check balances, transfer funds, pay bills, and more. Your security is our top priority.</p>
+    </div>
+</div>
     );
 }
 
