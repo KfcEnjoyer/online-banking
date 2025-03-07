@@ -125,7 +125,8 @@ The application uses JWT (JSON Web Tokens) for authentication:
 ## API Endpoints
 
 ### Authentication
-- `POST /auth/register` - Register a new user
+- `POST /auth/openAccount` - Open a new account and register a user
+- `GET /getaccounts` - Get user account details
 - `POST /auth/login` - User login
 - `GET /auth/verify` - Verify JWT token
 
