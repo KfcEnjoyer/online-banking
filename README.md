@@ -38,31 +38,34 @@ AL.bank is a modern web-based banking platform that provides users with a secure
 
 ```
 al-bank/
+├── .idea/                 # IDE configuration
+├── .vscode/               # VS Code settings
 ├── client/                # React frontend
-│   ├── public/
-│   ├── src/
-│   │   ├── components/    # Reusable components
-│   │   ├── helpers/       # Utility functions, axios config
-│   │   ├── contexts/      # Context providers
+│   ├── node_modules/      # Frontend dependencies
+│   ├── public/            # Static files
+│   ├── src/               # Source code
+│   │   ├── helpers/       # Utility functions and services
 │   │   ├── pages/         # Page components
-│   │   ├── styles/        # CSS styles
-│   │   ├── App.js
-│   │   └── index.js
-│   ├── package.json
-│   └── README.md
+│   │   ├── App.css        # Application styles
+│   │   ├── App.js         # Main application component
+│   │   ├── index.css      # Global styles
+│   │   ├── index.js       # Entry point
+│   │   └── reportWebVitals.js # Performance measuring
+│   ├── .gitignore         # Git ignore file
+│   ├── package-lock.json  # Dependencies lock file
+│   ├── package.json       # Frontend package configuration
+│   └── README.md          # Frontend documentation
 │
 ├── server/                # Node.js backend
-│   ├── config/            # Database configuration
-│   ├── controllers/       # Request handlers
+│   ├── config/            # Configuration settings
 │   ├── middlewares/       # Custom middleware
-│   ├── models/            # Database models
+│   ├── models/            # Sequelize models
+│   ├── node_modules/      # Backend dependencies
 │   ├── routes/            # API routes
-│   ├── utils/             # Utility functions
-│   ├── index.js           # Entry point
-│   ├── package.json
-│   └── README.md
-│
-└── README.md              # Main README
+│   ├── index.js           # Server entry point
+│   ├── package-lock.json  # Dependencies lock file
+│   ├── package.json       # Backend package configuration
+│   └── LICENSE            # License information
 ```
 
 ## Installation
@@ -76,8 +79,8 @@ al-bank/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/al-bank.git
-   cd al-bank
+   git clone https://github.com/KfcEnjoyer/online-banking
+   cd online-banking
    ```
 
 2. **Set up the backend**
@@ -141,40 +144,6 @@ The application uses JWT (JSON Web Tokens) for authentication:
 - `POST /deposit` - Deposit funds
 - `GET /transactions/:accountNumber` - Get account transactions
 - `GET /transactions/history` - Get transaction history
-
-## Project Structure
-
-```
-al-bank/
-├── .idea/                 # IDE configuration
-├── .vscode/               # VS Code settings
-├── client/                # React frontend
-│   ├── node_modules/      # Frontend dependencies
-│   ├── public/            # Static files
-│   ├── src/               # Source code
-│   │   ├── helpers/       # Utility functions and services
-│   │   ├── pages/         # Page components
-│   │   ├── App.css        # Application styles
-│   │   ├── App.js         # Main application component
-│   │   ├── index.css      # Global styles
-│   │   ├── index.js       # Entry point
-│   │   └── reportWebVitals.js # Performance measuring
-│   ├── .gitignore         # Git ignore file
-│   ├── package-lock.json  # Dependencies lock file
-│   ├── package.json       # Frontend package configuration
-│   └── README.md          # Frontend documentation
-│
-├── server/                # Node.js backend
-│   ├── config/            # Configuration settings
-│   ├── middlewares/       # Custom middleware
-│   ├── models/            # Sequelize models
-│   ├── node_modules/      # Backend dependencies
-│   ├── routes/            # API routes
-│   ├── index.js           # Server entry point
-│   ├── package-lock.json  # Dependencies lock file
-│   ├── package.json       # Backend package configuration
-│   └── LICENSE            # License information
-```
 
 ## Contributing
 
