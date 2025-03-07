@@ -3,12 +3,12 @@
     const { users, accounts } = require("../models");
     const bcrypt = require('bcrypt');
     const authenticatedUser = require("../middlewares/AuthMiddlewares");
-    const {sign} = require("jsonwebtoken"); // Import your middleware
-    const secret_key = "importantSecret"; // You should use environment variables in production
+    const {sign} = require("jsonwebtoken");
+    const secret_key = "importantSecret";
 
 
     function generateRandomAccountNumber() {
-        return String(Math.floor(1000000000 + Math.random() * 9000000000));  // Return as string
+        return String(Math.floor(1000000000 + Math.random() * 9000000000));
     }
 
     async function userExists(email) {
@@ -16,26 +16,22 @@
         return user !== null;
     }
 
-    // Function to check if account number exists in accounts table
     async function accountNumberExists(accountNumber) {
         const account = await accounts.findOne({ where: { accountNumber: accountNumber } });
         return account !== null;
     }
-    // GET /openaccount route
-    // GET /openaccount route
+  
     router.get("/get", authenticatedUser, async (req, res) => {
         try {
-            const userId = req.user.id; // Extracted from JWT via middleware
+            const userId = req.user.id;
             console.log(userId);
 
-            // Fetch all accounts for the user
             const accountsData = await accounts.findAll({ where: { userId } });
 
             if (!accountsData || accountsData.length === 0) {
                 return res.status(404).json({ error: "No accounts found for this user" });
             }
 
-            // Map the account data to return relevant fields
             const data = accountsData.map(account => ({
                 accountNumber: account.accountNumber,
                 accountType: account.accountType,
@@ -51,9 +47,8 @@
 
     router.post("/create", async (req, res) => {
         try {
-            const { firstName, middleName, lastName, email, password, phoneNumber, primaryAddress, secondaryAddress, city, state, country, zipCode, accountType } = req.body;  // Only accountType needed
-            const hashedPassword = await bcrypt.hash(password, 10); // Hash password with a salt rounds of 10
-            // Generate a unique account number
+            const { firstName, middleName, lastName, email, password, phoneNumber, primaryAddress, secondaryAddress, city, state, country, zipCode, accountType } = req.body;
+            const hashedPassword = await bcrypt.hash(password, 10);
             if (await userExists(email)) {
                 res.status(400).json({ error: "Email already in use" });
             }
@@ -92,19 +87,17 @@
     });
 
     router.post("/open", authenticatedUser, async (req, res) => {
-        const { accountType } = req.body;  // Only accountType is required
-        const userId = req.user.id; // Extracted from JWT via middleware
+        const { accountType } = req.body;
+        const userId = req.user.id;
 
         try {
-            // Generate a unique account number
             let accountNumber = generateRandomAccountNumber();
             while (await accountNumberExists(accountNumber)) {
                 accountNumber = generateRandomAccountNumber();
             }
 
-            // Create the new account for the authenticated user
             const newAccount = await accounts.create({
-                userId: userId, // Attach the authenticated user's ID to the account
+                userId: userId,
                 accountNumber: accountNumber,
                 accountType: accountType
             });

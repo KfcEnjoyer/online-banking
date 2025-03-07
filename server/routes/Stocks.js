@@ -1,16 +1,14 @@
 const express = require('express');
 const yf = require('yahoo-finance2').default;
-const authenticatedUser = require('../middlewares/AuthMiddlewares'); // Assuming this middleware checks the JWT
-const { accounts } = require('../models'); // Import your account model to verify account type
+const authenticatedUser = require('../middlewares/AuthMiddlewares');
+const { accounts } = require('../models');
 
 const router = express.Router();
 
 router.get('/top-stocks', authenticatedUser, async (req, res) => {
     try {
-        // Fetch user ID from request, assuming authenticatedUser adds it
         const userId = req.user.id;
 
-        // Check if the user has an Investments account
         const investmentsAccount = await accounts.findOne({
             where: {
                 userId,

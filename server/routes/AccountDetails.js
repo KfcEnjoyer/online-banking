@@ -1,23 +1,20 @@
 const express = require("express");
-const { accounts } = require("../models"); // Assuming you have an 'accounts' model
-const authenticatedUser = require("../middlewares/AuthMiddlewares"); // Middleware to authenticate the user
+const { accounts } = require("../models");
+const authenticatedUser = require("../middlewares/AuthMiddlewares");
 const router = express.Router();
 
-// Route to get account details by account number
 router.get("/:accountNumber", authenticatedUser, async (req, res) => {
-    const { accountNumber } = req.params; // Capture account number from URL
+    const { accountNumber } = req.params;
 
     try {
-        // Fetch the account data by account number for the authenticated user
         const account = await accounts.findOne({
-            where: { accountNumber: accountNumber, userId: req.user.id }, // Ensure it's the user's account
+            where: { accountNumber: accountNumber, userId: req.user.id },
         });
 
         if (!account) {
             return res.status(404).json({ error: "Account not found" });
         }
 
-        // Return the account details
         res.status(200).json({
             accountNumber: account.accountNumber,
             accountType: account.accountType,

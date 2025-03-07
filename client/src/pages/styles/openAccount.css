@@ -1,286 +1,867 @@
-:root {
-    --font-family-montserrat: 'Montserrat', sans-serif;
-  }
-  
-  /* CSS Reset */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: var(--font-family-montserrat);
-    background-color: rgba(255, 255, 255, 1); /* Белый фон */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start; /* Выравнивание сверху */
-    min-height: 100vh;
-    width: 100%; /* Устанавливаем ширину body на 100% */
-    overflow-x: hidden; /* Убираем горизонтальную прокрутку */
-  }
-  
-  /* Верхний логотип и меню */
-  .header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px; /* Убираем отступ сверху и снизу */
-    background-color: white;
-    position: fixed; /* Фиксированное меню */
-    top: 0;
-    left: 0;
-    z-index: 10; /* Чтобы меню всегда было сверху */
-  }
-  
-  .logo {
-    font-size: 24px;
-    font-weight: 700;
-    color: rgba(56, 56, 177, 1); /* Синий текст */
-  }
-  
-/* Стили для ссылок в навигации */
-.navLinks a {
-    margin: 0 15px;
-    text-decoration: none;
-    color: gray; /* Серый цвет для ссылок по умолчанию */
-    font-size: 16px;
-    font-weight: 500;
-    transition: color 0.3s ease; /* Плавный переход цвета */
-  }
-  
-  /* Стили для подсветки при наведении */
-  .navLinks a:hover {
-    color: var(--primary-color); /* Цвет при наведении */
-  }
-  
-  
-  /* Основной контейнер (отступ под меню) */
-  .mainContent {
-    padding-top: 120px;
-    text-align: center;
-    margin-top: 120px; /* Увеличиваем отступ, чтобы текст не перекрывался меню */
-    width: 100%; /* Ширина на 100% */
-  }
-  
-  /* Заголовок и подзаголовок */
-  .mainTitle {
-    font-size: 60px;
-    font-weight: 700;
-    color: rgba(56, 56, 177, 1); /* Синий текст */
-  }
-  
-  .mainSubtitle {
-    font-size: 25px;
-    font-weight: 300;
-    color: rgba(0, 0, 0, 0.7); /* Темно-серый текст */
-    margin-top: 10px; /* Отступ от заголовка */
-    text-align: center; /* Центрирование текста */
-  }
-  
-  /* Опции выбора аккаунта */
-  .accountOptions {
-    display: flex;
-    justify-content: center;
-    gap: 100px; /* Расстояние между карточками */
-    margin-top: 70px; /* Отступ от текста */
-    width: 100%; /* Устанавливаем ширину на 100% */
-  }
-  
-  /* Карточка аккаунта */
-  .accountCard {
-    background-color: rgba(255, 255, 255, 1); /* Белый фон */
-    width: 316px;
-    height: 186px;
-    border-radius: 80px; /* Изменено на 80px для менее округлых углов */
-    box-shadow: 0 8px 50px rgba(0, 0, 0, 0.1); /* Легкая тень */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .accountCard:hover {
-    transform: translateY(-10px); /* Подъем карточки при наведении */
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2); /* Увеличенная тень */
-  }
-  
-  .cardImage {
-    margin-left: -270px;
-    width: 270px; /* Размер изображения внутри карточки */
-    height: auto;
-    margin-bottom: -35px;
-  }
-  
-  .cardText {
-    font-size: 22px;
-    font-weight: 300;
-    color: rgb(37, 37, 37); /* Черный текст */
-    position: relative; /* Делаем текст относительно родителя */
-    top: -110px; /* Поднимаем текст вверх (можете менять значение) */
-    right: -30px;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  background-color: #f8f9fa;
+  line-height: 1.6;
+}
 
-
-
-
-
-
-  /* Скрываем модальное окно по умолчанию */
-/* Стили для плавного исчезновения всех элементов, кроме navbar */
-
-.registrationForm {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  border-radius: 80px;
-  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.2);
-  padding: 30px;
-  width: 400px;
-  height: 600px;
+.open-account-container {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.logo h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2563eb;
+  margin: 0;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #4b5563;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #2563eb;
+}
+
+.login-button {
+  background-color: #2563eb;
+  color: white !important;
+  padding: 0.5rem 1.25rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #1d4ed8;
+}
+
+.mobile-menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 110;
+  padding: 5px;
+}
+
+.mobile-menu-toggle span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: #2563eb;
+  border-radius: 3px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  transition: filter 0.3s ease;
+  position: relative;
+  z-index: 5;
+}
+
+.main-content.blurred-bg {
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+.hero-section {
+  text-align: center;
+  margin: 2rem 0 4rem;
+}
+
+.hero-section h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+}
+
+.hero-section p {
+  font-size: 1.1rem;
+  color: #6b7280;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.account-selection {
+  margin-bottom: 4rem;
+}
+
+.account-selection h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  color: #1e3a8a;
+}
+
+.account-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.account-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.account-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.account-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.account-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #1e3a8a;
+}
+
+.account-card p {
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.select-btn {
+  padding: 0.75rem 1.5rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.select-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.benefits-section {
+  margin-bottom: 4rem;
+}
+
+.benefits-section h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  color: #1e3a8a;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.benefit-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.benefit-card:hover {
+  transform: translateY(-5px);
+}
+
+.benefit-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.benefit-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+  color: #1e3a8a;
+}
+
+.benefit-card p {
+  color: #6b7280;
+}
+
+.registration-form-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
   justify-content: center;
   align-items: center;
-  animation: fadeIn 0.5s ease forwards;
+  z-index: 2000;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.registration-form {
+  background-color: white;
+  width: 100%;
+  max-width: 650px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  padding: 2rem;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideIn 0.4s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.close-button {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: #6b7280;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover {
+  color: #ef4444;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.form-header h2 {
+  font-size: 1.75rem;
+  color: #1e3a8a;
+  margin-bottom: 1.5rem;
+}
+
+.progress-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+
+.progress-step {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #6b7280;
+  position: relative;
+  z-index: 2;
+}
+
+.progress-step.active {
+  background-color: #2563eb;
+  color: white;
+}
+
+.progress-line {
+  flex: 1;
+  height: 3px;
+  background-color: #e5e7eb;
+  margin: 0 10px;
+  position: relative;
+}
+
+.progress-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  background-color: #2563eb;
+  transition: width 0.3s ease;
+}
+
+.progress-step.active + .progress-line::after {
+  width: 100%;
+}
+
+.step-description {
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.form-step {
+  animation: fadeIn 0.4s ease-out forwards;
 }
 
 @keyframes fadeIn {
   from {
-      opacity: 0;
-      transform: translate(-50%, -60%);
-    }
-    to {
-      opacity: 1;
-      transform: translate(-50%, -50%);
-    }
+    opacity: 0;
   }
-  
-/* Стили для полей ввода */
-.registrationForm input {
-  width: 100%; /* Сделать поля ввода на всю ширину контейнера */
-  padding: 10px;
-  margin: 12px 0;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  box-sizing: border-box; /* Чтобы padding не выходил за пределы */
+  to {
+    opacity: 1;
+  }
 }
 
-/* Контейнер для кнопок с использованием Flexbox */
-.registrationForm .buttonContainer {
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="tel"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.input-error {
+  border-color: #ef4444 !important;
+}
+
+.input-error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+.error-message {
+  color: #ef4444;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group.half {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.form-group.checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.form-group.checkbox input {
+  margin-top: 0.25rem;
+  width: 16px;
+  height: 16px;
+  accent-color: #2563eb;
+}
+
+.form-group.checkbox label {
+  margin-bottom: 0;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.form-buttons {
   display: flex;
   justify-content: space-between;
-  width: 100%; /* Сделать контейнер кнопок на всю ширину */
-  margin-top: 20px;
+  margin-top: 2rem;
 }
 
-/* Кнопки с одинаковым размером */
-.registrationForm .buttonContainer button {
-  padding: 10px 30px;
-  background: #007bff;
+.primary-button,
+.secondary-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.primary-button {
+  background-color: #2563eb;
   color: white;
   border: none;
-  border-radius: 30px;
+}
+
+.primary-button:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.primary-button:active {
+  transform: translateY(0);
+}
+
+.secondary-button {
+  background-color: transparent;
+  color: #4b5563;
+  border: 1px solid #d1d5db;
+}
+
+.secondary-button:hover {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.footer {
+  position: relative;
+  background-color: #1e3a8a;
+  color: white;
+  margin-top: auto;
+  z-index: 10;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 3rem 1.5rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 200px;
+  margin-bottom: 1.5rem;
+  padding-right: 2rem;
+}
+
+.footer-section:last-child {
+  padding-right: 0;
+}
+
+.footer-section h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1.25rem;
+  font-weight: 600;
+  color: #ffffff;
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+
+.footer-section h3::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40px;
+  height: 2px;
+  background-color: #3b82f6;
+}
+
+.footer-section p {
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.social-icons {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+  background-color: #3b82f6;
+  transform: translateY(-3px);
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: color 0.3s ease, padding-left 0.2s ease;
+  font-size: 0.95rem;
+  display: inline-block;
+}
+
+.footer-links a:hover {
+  color: white;
+  padding-left: 5px;
+}
+
+.footer-links a::before {
+  content: '›';
+  margin-right: 5px;
+  color: #3b82f6;
+}
+
+.contact-info {
+  margin-top: 0.5rem;
+}
+
+.contact-info p {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.contact-info i, 
+.contact-info svg {
+  margin-right: 10px;
+  color: #3b82f6;
+  min-width: 16px;
+}
+
+.footer-bottom {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.footer-bottom-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-bottom p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.footer-bottom-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-bottom-links a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.footer-bottom-links a:hover {
+  color: white;
+}
+
+.newsletter-form {
+  display: flex;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.newsletter-input {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 4px 0 0 4px;
+  font-size: 0.9rem;
+}
+
+.newsletter-button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 0 4px 4px 0;
   cursor: pointer;
-  flex: 1; /* Кнопки занимают одинаковое пространство */
-  margin: 0 10px; /* Отступы между кнопками */
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
 }
 
-/* Эффект при наведении на кнопки */
-.registrationForm .buttonContainer button:hover {
-  transform: scale(1.05);
-  background-color: #0056b3;
+.newsletter-button:hover {
+  background-color: #1d4ed8;
 }
 
-
-
-  .registrationForm h2 {
-    position: relative;
-    top: -30px; /* Поднимет только этот элемент на 10px */
+.contact-hours {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
 }
 
-
-
-.fadeOutTitle{
-  opacity: 0; /* Полностью прозрачный */
-  pointer-events: none; /* Отключение взаимодействия */
-  transition: opacity 0.5s ease-out; /* Плавный переход */
+.contact-hours p {
+  margin-bottom: 0.4rem;
 }
 
-/* Для скрытия карточек аккаунтов */
-.fadeOutOptions {
-  opacity: 0; /* Полностью прозрачный */
-  pointer-events: none; /* Отключение взаимодействия */
-  transition: opacity 0.5s ease-out; /* Плавный переход */
+.footer-waves {
+  display: none;
 }
 
+.wave {
+  position: absolute;
+  width: 100%;
+  height: 100px;
+  background-repeat: repeat-x;
+  background-position: 0 bottom;
+  transform-origin: center bottom;
+}
 
+#wave1 {
+  animation: wave 30s linear infinite;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%232563eb' fill-opacity='0.5' d='M0,160L48,138.7C96,117,192,75,288,64C384,53,480,75,576,101.3C672,128,768,160,864,149.3C960,139,1056,85,1152,101.3C1248,117,1344,203,1392,245.3L1440,288L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+  z-index: 12;
+}
 
+#wave2 {
+  animation: wave 20s linear infinite reverse;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%232563eb' fill-opacity='0.3' d='M0,128L48,144C96,160,192,192,288,186.7C384,181,480,139,576,117.3C672,96,768,96,864,128C960,160,1056,224,1152,224C1248,224,1344,160,1392,128L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+  z-index: 11;
+}
 
-
-
-
-
-
-/* Адаптивные стили */
-@media (max-width: 1024px) {
-  .mainTitle {
-    font-size: 50px;
+@keyframes wave {
+  0% {
+    background-position-x: 0;
   }
-
-  .mainSubtitle {
-    font-size: 22px;
+  100% {
+    background-position-x: 1440px;
   }
+}
 
-  .accountCard {
-    width: 280px;
-    height: 160px;
+@media (max-width: 992px) {
+  .footer-content {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  
+  .footer-section {
+    flex: 0 0 50%;
+    padding-right: 1.5rem;
   }
 }
 
 @media (max-width: 768px) {
-  .mainTitle {
-    font-size: 40px;
+  .mobile-menu-toggle {
+    display: flex;
   }
 
-  .mainSubtitle {
-    font-size: 18px;
+  .nav-links {
+    display: flex;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    background-color: white;
+    padding: 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    z-index: 100;
   }
 
-  .accountOptions {
-    gap: 20px;
+  .nav-links.active {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
   }
 
-  .accountCard {
-    width: 250px;
-    height: 140px;
+  .nav-links a {
+    padding: 1rem 1.5rem;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .nav-links a:last-child {
+    border-bottom: none;
+  }
+
+  .nav-links .login-button {
+    margin: 1rem;
+    display: inline-block;
+    width: calc(100% - 2rem);
+    text-align: center;
+    border-radius: 6px;
+  }
+
+
+  .hero-section h1 {
+    font-size: 2rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-buttons {
+    flex-direction: column-reverse;
+    gap: 1rem;
+  }
+
+  .primary-button, .secondary-button {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .newsletter-form {
+    flex-direction: column;
+  }
+  
+  .newsletter-input {
+    width: 100%;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .newsletter-button {
+    width: 100%;
+    border-radius: 4px;
+  }
+  
+  .footer-bottom-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .footer-bottom-links {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-section {
+    flex: 0 0 100%;
+    padding-right: 0;
+  }
+  
+  .footer-bottom-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
   }
 }
 
 @media (max-width: 480px) {
-  .mainTitle {
-    font-size: 30px;
+  .hero-section h1 {
+    font-size: 1.75rem;
   }
 
-  .mainSubtitle {
-    font-size: 16px;
+  .account-cards, .benefits-grid {
+    grid-template-columns: 1fr;
   }
 
-  .accountCard {
-    width: 200px;
-    height: 120px;
+  .registration-form {
+    padding: 1.5rem;
   }
-
-  .registrationForm {
-    width: 95%;
-    padding: 20px;
+  
+  .form-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .progress-step {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
   }
 }

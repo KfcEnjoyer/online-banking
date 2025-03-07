@@ -33,7 +33,7 @@ app.use('/api/stocks', stocks);
 
 
 db.sequelize.sync().then(() => {
-  app.listen(3001, "172.24.2.169", () => {
+  app.listen(3001, "127.0.0.1", () => {
     console.log("Server running on port 3001");
   });
 });
