@@ -142,38 +142,38 @@ The application uses JWT (JSON Web Tokens) for authentication:
 - `GET /transactions/:accountNumber` - Get account transactions
 - `GET /transactions/history` - Get transaction history
 
-## Project Structure Details
+## Project Structure
 
 ```
 al-bank/
+├── .idea/                 # IDE configuration
+├── .vscode/               # VS Code settings
 ├── client/                # React frontend
+│   ├── node_modules/      # Frontend dependencies
 │   ├── public/            # Static files
-│   ├── src/
-│   │   ├── components/    # Reusable UI components
-│   │   │   ├── Dashboard/ # Dashboard related components
-│   │   │   ├── Auth/      # Authentication components
-│   │   │   └── common/    # Shared components (buttons, forms, etc.)
-│   │   ├── contexts/      # React context providers
-│   │   │   └── AuthContext.js # Authentication state management
-│   │   ├── helpers/       # Utility functions
-│   │   │   └── axiosInstance.js # Axios configuration
-│   │   ├── pages/         # Main page components
-│   │   ├── styles/        # CSS styles
+│   ├── src/               # Source code
+│   │   ├── helpers/       # Utility functions and services
+│   │   ├── pages/         # Page components
+│   │   ├── App.css        # Application styles
 │   │   ├── App.js         # Main application component
-│   │   └── index.js       # Entry point
-│   └── package.json
+│   │   ├── index.css      # Global styles
+│   │   ├── index.js       # Entry point
+│   │   └── reportWebVitals.js # Performance measuring
+│   ├── .gitignore         # Git ignore file
+│   ├── package-lock.json  # Dependencies lock file
+│   ├── package.json       # Frontend package configuration
+│   └── README.md          # Frontend documentation
 │
 ├── server/                # Node.js backend
 │   ├── config/            # Configuration settings
-│   │   └── config.js      # Database configuration
-│   ├── controllers/       # Request handlers
 │   ├── middlewares/       # Custom middleware
-│   │   └── AuthMiddlewares.js # JWT validation
 │   ├── models/            # Sequelize models
+│   ├── node_modules/      # Backend dependencies
 │   ├── routes/            # API routes
-│   ├── utils/             # Utility functions
 │   ├── index.js           # Server entry point
-│   └── package.json
+│   ├── package-lock.json  # Dependencies lock file
+│   ├── package.json       # Backend package configuration
+│   └── LICENSE            # License information
 ```
 
 ## Contributing
