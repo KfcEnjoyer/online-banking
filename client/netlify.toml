@@ -1,7 +1,7 @@
 [build]
-  command = "cd client && npm install && npm run build"
-  publish = "client/build"
-  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF ./client/"
+  base = "client"
+  command = "npm install && npm run build"
+  publish = "build"
 
 [[redirects]]
   from = "/*"
